@@ -58,55 +58,55 @@ def find_pairings(selected_file: str) -> dict:
     }
 
 
-@mcp.tool()
-def validate_pair_compatibility(training_scan_file: str, training_dark_file: str) -> dict:
-    """
-    Validates that the input contains one park_ss_ff file and one dark file, and that
-    the 6-digit numeric IDs differ by no more than 10.
-    Args:
-        training_scan_file (str): Path to the training scan file.
-        training_dark_file (str): Path to the training dark file.
-    Returns:
-        dict: A dictionary indicating compatibility, the files involved, their IDs, and the difference.
-    """
-    try:
-        # Use categorize_files to identify file types
-        darks, parks = categorize_files([training_scan_file, training_dark_file])
+# @mcp.tool()
+# def validate_pair_compatibility(training_scan_file: str, training_dark_file: str) -> dict:
+#     """
+#     Validates that the input contains one park_ss_ff file and one dark file, and that
+#     the 6-digit numeric IDs differ by no more than 10.
+#     Args:
+#         training_scan_file (str): Path to the training scan file.
+#         training_dark_file (str): Path to the training dark file.
+#     Returns:
+#         dict: A dictionary indicating compatibility, the files involved, their IDs, and the difference.
+#     """
+#     try:
+#         # Use categorize_files to identify file types
+#         darks, parks = categorize_files([training_scan_file, training_dark_file])
 
-        if len(darks)
-  File "/home/akirsch/.local/lib/python3.10/site-packages/mcp/server/fastmcp/server.py", line 217, in run != 1 or len(parks) != 1:
-            return {
-                "compatible": False,
-                "reason": "Inputs must include exactly one dark file (starting with 'dark') and one park file (starting with 'park_ss_ff')."
-            }
+#         if len(darks):
+#             File "/home/akirsch/.local/lib/python3.10/site-packages/mcp/server/fastmcp/server.py", line 217, in run != 1 or len(parks) != 1:
+#             return {
+#                 "compatible": False,
+#                 "reason": "Inputs must include exactly one dark file (starting with 'dark') and one park file (starting with 'park_ss_ff')."
+#             }
 
-        dark_file = darks[0]
-        park_file = parks[0]
+#         dark_file = darks[0]
+#         park_file = parks[0]
 
-        dark_id = extract_id(dark_file)
-        park_id = extract_id(park_file)
+#         dark_id = extract_id(dark_file)
+#         park_id = extract_id(park_file)
 
-        if dark_id is None or park_id is None:
-            return {
-                "compatible": False,
-                "reason": "Could not extract 6-digit numeric ID from one or both filenames."
-            }
+#         if dark_id is None or park_id is None:
+#             return {
+#                 "compatible": False,
+#                 "reason": "Could not extract 6-digit numeric ID from one or both filenames."
+#             }
 
-        diff = abs(park_id - dark_id)
-        compatible = diff <= 10
+#         diff = abs(park_id - dark_id)
+#         compatible = diff <= 10
 
-        return {
-            "compatible": compatible,
-            "dark_file": dark_file,
-            "park_file": park_file,
-            "dark_id": dark_id,
-            "park_id": park_id,
-            "difference": diff,
-            "reason": "Compatible" if compatible else f"Difference is {diff}, which exceeds threshold of 10."
-        }
+#         return {
+#             "compatible": compatible,
+#             "dark_file": dark_file,
+#             "park_file": park_file,
+#             "dark_id": dark_id,
+#             "park_id": park_id,
+#             "difference": diff,
+#             "reason": "Compatible" if compatible else f"Difference is {diff}, which exceeds threshold of 10."
+#         }
 
-    except Exception as e:
-        return {"compatible": False, "error": str(e)}
+#     except Exception as e:
+#         return {"compatible": False, "error": str(e)}
 
 
 if __name__ == "__main__":

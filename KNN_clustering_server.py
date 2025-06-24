@@ -76,8 +76,8 @@ def run_baseline_clustering(file_mode: int, baseline_scan: str, baseline_scan_da
             cmd,
             capture_output=True,
             cwd=BASELINE_SCRIPT_DIR,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            # stdout=subprocess.PIPE,
+            # stderr=subprocess.PIPE,
             text=True,
             check=True
         )
