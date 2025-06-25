@@ -16,7 +16,7 @@ mcp = FastMCP("BYOL_training")
 
 # Define the path to the main.py script and the Python executable
 SCRIPT_PATH = "/home/akirsch/RareEventDetectionHEDM/RareEventDetectionHEDM/code/BraggEmb_code/main.py"
-PYTHON_EXEC = "python" #"/home/akirsch/miniconda3/envs/event_detection/bin/python"
+PYTHON_EXEC = "/home/akirsch/miniconda3/envs/event_detection/bin/python"
 workspace_dir = os.environ.get("CLINE_WORKSPACE", "/home/shared_data/raw")
 
 
@@ -44,6 +44,15 @@ def run_training_script(training_scan_file: str, training_dark_file: str, thold:
             "-expName", "mcp_run",
             "-verbose", "1"
         ]
+        # cmd = [
+        #     "conda", "run", "-n", "event_detection", "python", SCRIPT_PATH,
+        #     "-training_scan_file", os.path.join(workspace_dir, training_scan_file),
+        #     "-training_dark_file", os.path.join(workspace_dir, training_dark_file),
+        #     "-thold", str(thold),
+        #     "-gpus", "0",
+        #     "-expName", "mcp_run",
+        #     "-verbose", "1"
+        # ]
 
 
         result = subprocess.run(
@@ -61,7 +70,7 @@ def run_training_script(training_scan_file: str, training_dark_file: str, thold:
 
 
 
-            timeout=60 * 30  # 30-minute timeout
+            timeout=60 * 40  # 30-minute timeout
         )
 
         stdout = result.stdout.strip() if result.stdout is not None else None
