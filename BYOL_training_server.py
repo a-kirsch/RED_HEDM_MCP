@@ -44,15 +44,6 @@ def run_training_script(training_scan_file: str, training_dark_file: str, thold:
             "-expName", "mcp_run",
             "-verbose", "1"
         ]
-        # cmd = [
-        #     "conda", "run", "-n", "event_detection", "python", SCRIPT_PATH,
-        #     "-training_scan_file", os.path.join(workspace_dir, training_scan_file),
-        #     "-training_dark_file", os.path.join(workspace_dir, training_dark_file),
-        #     "-thold", str(thold),
-        #     "-gpus", "0",
-        #     "-expName", "mcp_run",
-        #     "-verbose", "1"
-        # ]
 
 
         result = subprocess.run(
@@ -64,12 +55,6 @@ def run_training_script(training_scan_file: str, training_dark_file: str, thold:
     #         stderr=subprocess.PIPE,
     #         check=True
     #     )
-    #     return f"[SUCCESS] Script completed successfully:\n{result.stdout}"
-    # except subprocess.CalledProcessError as e:
-    #     return f"[ERROR] Script failed:\nSTDOUT:\n{e.stdout}\nSTDERR:\n{e.stderr}"
-
-
-
             timeout=60 * 40  # 30-minute timeout
         )
 

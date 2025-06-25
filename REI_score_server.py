@@ -72,15 +72,7 @@ def run_testing_scan(
             "-degs_mode", str(degs_mode)
         ]
 
-        # result = subprocess.run(
-        #     cmd,
-        #     cwd=SCRIPT_DIR,  # Set working directory to the script's directory
-        #     # capture_output=True,
-        #     stdout=subprocess.PIPE,
-        #     stderr=subprocess.PIPE,
-        #     text=True,  # capture stdout and stderr as text
-        #     check=True  # Raise an error if the command fails
-        # )
+
         result = subprocess.run(
             cmd,
             cwd=SCRIPT_DIR,  # Set working directory to the script's directory
