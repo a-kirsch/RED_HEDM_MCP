@@ -4,9 +4,10 @@ import re
 import sys
 from mcp.server.fastmcp import FastMCP
 
-print("Starting KNN_clustering_server...")
+print("[DEBUG] Python executable:", sys.executable)
+print("[DEBUG] sys.path:", sys.path)
+
 mcp = FastMCP("KNN_clustering")
-print("MCP server initialized.")
 
 
 # Define the directory and script for baseline clustering
@@ -25,8 +26,8 @@ def run_baseline_clustering(file_mode: int, baseline_scan: str, baseline_scan_da
     print(f"File mode: {file_mode}, Baseline scan: {baseline_scan}, Dark scan: {baseline_scan_dark}, Threshold: {thold}")
     try:
         cmd = [
-            sys.executable, BASELINE_SCRIPT,
-            # PYTHON_EXEC, BASELINE_SCRIPT,
+            # sys.executable, BASELINE_SCRIPT,
+            PYTHON_EXEC, BASELINE_SCRIPT,
             "-file_mode", str(file_mode),
             "-baseline_scan", "/home/shared_data/raw/"+baseline_scan,
             "-baseline_scan_dark", "/home/shared_data/raw/"+baseline_scan_dark,
@@ -38,17 +39,34 @@ def run_baseline_clustering(file_mode: int, baseline_scan: str, baseline_scan_da
         env["PATH"] = "/home/akirsch/miniconda3/envs/event_detection/bin:" + env["PATH"]
         env["CONDA_DEFAULT_ENV"] = "event_detection"
         env["PYTHONNOUSERSITE"] = "1"
+        result = subprocess.run(
             cmd,
             capture_output=True,
             cwd=BASELINE_SCRIPT_DIR,
             # stdout=subprocess.PIPE,
             # stderr=subprocess.PIPE,
             text=True,
-            check=True
         )
-        return f"[SUCCESS] Script completed successfully:\n{result.stdout}"
-    except subprocess.CalledProcessError as e:
-        return f"[ERROR] Script failed:\nSTDOUT:\n{e.stdout}\nSTDERR:\n{e.stderr}"
+        stdout = result.stdout.strip() if result.stdout else ""
+        stderr = result.stderr.strip() if result.stderr else ""
+
+        return {
+            "command": " ".join(cmd),
+            "stdout": stdout,
+            "stderr": stderr,
+            "returncode": result.returncode
+        }
+    except Exception as e:
+        return {
+            "command": " ".join(cmd),
+            "error": str(e)
+        }
+
+
+
+    #     return f"[SUCCESS] Script completed successfully:\n{result.stdout}"
+    # except subprocess.CalledProcessError as e:
+    #     return f"[ERROR] Script failed:\nSTDOUT:\n{e.stdout}\nSTDERR:\n{e.stderr}"
 
 
 if __name__ == "__main__":

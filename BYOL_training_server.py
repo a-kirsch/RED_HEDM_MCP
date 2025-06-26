@@ -5,11 +5,6 @@ import re
 from mcp.server.fastmcp import FastMCP
 import sys
 
-# Print Python version and executable for debugging
-print("Python version:", sys.version)
-print("Python executable:", sys.executable)
-print("Sys path:", sys.path)
-
 # Ensure the MCP server is running
 mcp = FastMCP("BYOL_training")
 
