@@ -11,10 +11,10 @@ mcp = FastMCP("KNN_clustering")
 
 
 # Define the directory and script for baseline clustering
-BASELINE_SCRIPT_DIR = "/home/akirsch/RareEventDetectionHEDM/RareEventDetectionHEDM/code/EventDetection_code"
+BASELINE_SCRIPT_DIR = "/home/beams/AKIRSCH/rareevent/RareEventDetectionHEDM/code/EventDetection_code"
 BASELINE_SCRIPT = os.path.join(BASELINE_SCRIPT_DIR, "baseline_pre.py")
-PYTHON_EXEC = "/home/akirsch/miniconda3/envs/event_detection/bin/python"
-workspace_dir = os.environ.get("CLINE_WORKSPACE", "/home/shared_data/raw")
+PYTHON_EXEC = "/home/beams/AKIRSCH/miniconda3/envs/event_detection/bin/python"
+workspace_dir = os.environ.get("CLINE_WORKSPACE", "/home/beams/WZHENG/RareEventDetectionHEDM/example_dataset/raw/")
 
 @mcp.tool()
 def run_baseline_clustering(file_mode: int, baseline_scan: str, baseline_scan_dark: str, thold: int) -> str:
@@ -29,19 +29,19 @@ def run_baseline_clustering(file_mode: int, baseline_scan: str, baseline_scan_da
             # sys.executable, BASELINE_SCRIPT,
             PYTHON_EXEC, BASELINE_SCRIPT,
             "-file_mode", str(file_mode),
-            "-baseline_scan", "/home/shared_data/raw/"+baseline_scan,
-            "-baseline_scan_dark", "/home/shared_data/raw/"+baseline_scan_dark,
+            "-baseline_scan", os.path.join(workspace_dir, baseline_scan),
+            "-baseline_scan_dark", os.path.join(workspace_dir, baseline_scan_dark),
             "-thold", str(thold)
         ]
 
         # Lock environment to conda env explicitly
         env = os.environ.copy()
-        env["PATH"] = "/home/akirsch/miniconda3/envs/event_detection/bin:" + env["PATH"]
+        env["PATH"] = "/home/beams/AKIRSCH/miniconda3/envs/event_detection/bin:" + env["PATH"]
         env["CONDA_DEFAULT_ENV"] = "event_detection"
         env["PYTHONNOUSERSITE"] = "1"
         result = subprocess.run(
             cmd,
-            capture_output=True,
+            # capture_output=True,
             cwd=BASELINE_SCRIPT_DIR,
             # stdout=subprocess.PIPE,
             # stderr=subprocess.PIPE,
@@ -70,10 +70,10 @@ def run_baseline_clustering(file_mode: int, baseline_scan: str, baseline_scan_da
 
 
 if __name__ == "__main__":
-    mcp.run()        
-    # print("Starting KNN")
-    # print(run_baseline_clustering(
-    #     file_mode = 1,baseline_scan = "park_ss_ff_0MPa_000315.edf.ge5",
-    #     baseline_scan_dark = "dark_before_000320.edf.ge5",
-    #     thold = 100
-    #     ))
+    # mcp.run()        
+    print("Starting KNN")
+    print(run_baseline_clustering(
+        file_mode = 1,baseline_scan = "park_ss_ff_0MPa_000315.edf.ge5",
+        baseline_scan_dark = "dark_before_000320.edf.ge5",
+        thold = 100
+        ))
