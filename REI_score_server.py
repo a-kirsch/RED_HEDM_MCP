@@ -9,10 +9,10 @@ print("Starting REI_score_server...")
 mcp = FastMCP("REI_score")
 print("MCP server initialized.")
 
-SCRIPT_DIR = "/home/akirsch/RareEventDetectionHEDM/RareEventDetectionHEDM/code/EventDetection_code"
-SCRIPT_PATH = "/home/akirsch/RareEventDetectionHEDM/RareEventDetectionHEDM/code/EventDetection_code/testing_scan.py"
-PYTHON_EXEC = "/home/akirsch/miniconda3/envs/event_detection/bin/python"  # Conda env Python path
-
+SCRIPT_DIR = "/home/beams/AKIRSCH/rareevent/RareEventDetectionHEDM/code/EventDetection_code"
+SCRIPT_PATH = "/home/beams/AKIRSCH/rareevent/RareEventDetectionHEDM/code/EventDetection_code/testing_scan.py"
+PYTHON_EXEC = "/home/beams/AKIRSCH/miniconda3/envs/event_detection/bin/python"
+workspace_dir = os.environ.get("CLINE_WORKSPACE", "/home/beams/WZHENG/RareEventDetectionHEDM/example_dataset/raw/")
 
 @mcp.tool()
 def run_testing_scan(
@@ -58,8 +58,8 @@ def run_testing_scan(
         cmd = [
             PYTHON_EXEC, "testing_scan.py",
             "-file_mode", str(file_mode),
-            "-testing_scan", "/home/shared_data/raw/"+testing_scan,
-            "-testing_scan_dark", "/home/shared_data/raw/"+testing_scan_dark,
+            "-testing_scan", os.path.join(workspace_dir, testing_scan),
+            "-testing_scan_dark", os.path.join(workspace_dir, testing_scan_dark),
             "-thold", str(thold),
             "-output_csv", output_csv,
             "-trained_encoder", trained_encoder,
@@ -100,12 +100,12 @@ def run_testing_scan(
     #     return f"Unexpected error: {str(e)}"
 
 if __name__ == "__main__":
-    mcp.run()
+    # mcp.run()
     # print("main")
-    # print(run_testing_scan(
-    #     file_mode=1,
-    #     testing_scan = "park_ss_ff_260MPa_000497.edf.ge5",
-    #     testing_scan_dark = "dark_after_000493.edf.ge5",
-    #     thold = 100,
-    #     output_csv = "rei_score_260MPa.csv"
-    # ))
+    print(run_testing_scan(
+        file_mode=1,
+        testing_scan = "park_ss_ff_260MPa_000497.edf.ge5",
+        testing_scan_dark = "dark_before_000502.edf.ge5",
+        thold = 100,
+        output_csv = "rei_score_260MPa.csv"
+    ))
