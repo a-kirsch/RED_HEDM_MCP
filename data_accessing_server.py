@@ -6,7 +6,7 @@ print("Starting data_accessing_server...")
 mcp = FastMCP("data accessing")
 print("MCP server initialized.")
 
-raw_data_dir = "/home/shared_data/raw"
+raw_data_dir = "/home/beams/WZHENG/RareEventDetectionHEDM/example_dataset/raw/"
 
 def extract_id(filename: str) -> int | None:
     match = re.search(r'(\d{6})', filename)
@@ -110,5 +110,5 @@ def find_pairings(selected_file: str) -> dict:
 
 
 if __name__ == "__main__":
-    mcp.run()
-    # print(list_files())
+    # mcp.run()
+    print(list_files())
