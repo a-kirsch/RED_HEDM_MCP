@@ -50,17 +50,19 @@ def run_baseline_clustering(file_mode: int, baseline_scan: str, baseline_scan_da
         stdout = result.stdout.strip() if result.stdout else ""
         stderr = result.stderr.strip() if result.stderr else ""
 
-        return {
-            "command": " ".join(cmd),
-            "stdout": stdout,
-            "stderr": stderr,
-            "returncode": result.returncode
-        }
+        return (
+            f"Command: {' '.join(cmd)}\n"
+            f"Return Code: {result.returncode}\n"
+            f"--- STDOUT ---\n{stdout}\n"
+            f"--- STDERR ---\n{stderr}"
+        )
+    # except Exception as e:
+    #     return {
+    #         "command": " ".join(cmd),
+    #         "error": str(e)
+    #     }
     except Exception as e:
-        return {
-            "command": " ".join(cmd),
-            "error": str(e)
-        }
+        return f"Error occurred while running the script:\nCommand: {' '.join(cmd)}\nError: {str(e)}"
 
 
 
