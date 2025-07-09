@@ -110,5 +110,5 @@ def find_pairings(selected_file: str) -> dict:
 
 
 if __name__ == "__main__":
-    # mcp.run()
-    print(list_files())
+    mcp.run()
+    # print(list_files())

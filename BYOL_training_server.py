@@ -43,7 +43,7 @@ def run_training_script(training_scan_file: str, training_dark_file: str, thold:
 
         result = subprocess.run(
             cmd,
-            # capture_output=True, # comment out for local testing
+            capture_output=True, # comment out for local testing
             text=True, # capture stdout and stderr as text
             cwd=os.path.dirname(SCRIPT_PATH), #Set working directory
     #         stdout=subprocess.PIPE,
@@ -67,9 +67,9 @@ def run_training_script(training_scan_file: str, training_dark_file: str, thold:
         return {"error": str(e)}
 
 if __name__ == "__main__":
-    # mcp.run()
-    print(run_training_script(
-        training_scan_file = "park_ss_ff_0MPa_000315.edf.ge5",
-        training_dark_file = "dark_before_000320.edf.ge5",
-        thold = 100
-        ))
+    mcp.run()
+    # print(run_training_script(
+    #     training_scan_file = "park_ss_ff_0MPa_000315.edf.ge5",
+    #     training_dark_file = "dark_before_000320.edf.ge5",
+    #     thold = 100
+    #     ))

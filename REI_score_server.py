@@ -100,12 +100,12 @@ def run_testing_scan(
     #     return f"Unexpected error: {str(e)}"
 
 if __name__ == "__main__":
-    # mcp.run()
+    mcp.run()
     # print("main")
-    print(run_testing_scan(
-        file_mode=1,
-        testing_scan = "park_ss_ff_260MPa_000497.edf.ge5",
-        testing_scan_dark = "dark_before_000502.edf.ge5",
-        thold = 100,
-        output_csv = "rei_score_260MPa.csv"
-    ))
+    # print(run_testing_scan(
+    #     file_mode=1,
+    #     testing_scan = "park_ss_ff_260MPa_000497.edf.ge5",
+    #     testing_scan_dark = "dark_before_000502.edf.ge5",
+    #     thold = 100,
+    #     output_csv = "rei_score_260MPa.csv"
+    # ))

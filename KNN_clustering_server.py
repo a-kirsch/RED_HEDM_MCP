@@ -41,7 +41,7 @@ def run_baseline_clustering(file_mode: int, baseline_scan: str, baseline_scan_da
         env["PYTHONNOUSERSITE"] = "1"
         result = subprocess.run(
             cmd,
-            # capture_output=True,
+            capture_output=True,
             cwd=BASELINE_SCRIPT_DIR,
             # stdout=subprocess.PIPE,
             # stderr=subprocess.PIPE,
@@ -70,10 +70,10 @@ def run_baseline_clustering(file_mode: int, baseline_scan: str, baseline_scan_da
 
 
 if __name__ == "__main__":
-    # mcp.run()        
-    print("Starting KNN")
-    print(run_baseline_clustering(
-        file_mode = 1,baseline_scan = "park_ss_ff_0MPa_000315.edf.ge5",
-        baseline_scan_dark = "dark_before_000320.edf.ge5",
-        thold = 100
-        ))
+    mcp.run()        
+    # print("Starting KNN")
+    # print(run_baseline_clustering(
+    #     file_mode = 1,baseline_scan = "park_ss_ff_0MPa_000315.edf.ge5",
+    #     baseline_scan_dark = "dark_before_000320.edf.ge5",
+    #     thold = 100
+    #     ))
