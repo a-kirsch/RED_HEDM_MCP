@@ -87,18 +87,6 @@ def run_testing_scan(
         return f"[ERROR] Script failed:\nSTDOUT:\n{e.stdout}\nSTDERR:\n{e.stderr}"
 
 
-
-    #     print("Running command...", flush=True)
-    #     subprocess.run(cmd, check=True)
-    #     print("Done.", flush=True)
-    #     return "Testing scan completed."
-
-
-    # except subprocess.CalledProcessError as e:
-    #     return f"Error running testing_scan.py:\nSTDOUT:\n{e.stdout}\nSTDERR:\n{e.stderr}"
-    # except Exception as e:
-    #     return f"Unexpected error: {str(e)}"
-
 if __name__ == "__main__":
     mcp.run()
     # print("main")
