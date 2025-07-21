@@ -4,10 +4,7 @@ import re
 import sys
 from mcp.server.fastmcp import FastMCP
 
-print("[DEBUG] Python executable:", sys.executable)
-print("[DEBUG] sys.path:", sys.path)
-
-mcp = FastMCP("KNN_clustering")
+mcp = FastMCP("K_means_clustering")
 
 
 # Define the directory and script for baseline clustering
@@ -19,7 +16,7 @@ workspace_dir = os.environ.get("CLINE_WORKSPACE", "/home/beams/WZHENG/RareEventD
 @mcp.tool()
 def run_baseline_clustering(file_mode: int, baseline_scan: str, baseline_scan_dark: str, thold: int) -> str:
     """
-    Run the baseline_pre.py script to perform KNN baseline clustering.
+    Run the baseline_pre.py script to perform K means baseline clustering.
     Validates input files before execution.
     """
     print("Running baseline clustering with parameters:")
@@ -73,7 +70,7 @@ def run_baseline_clustering(file_mode: int, baseline_scan: str, baseline_scan_da
 
 if __name__ == "__main__":
     mcp.run()        
-    # print("Starting KNN")
+    # print("Starting K_means clustering server...")
     # print(run_baseline_clustering(
     #     file_mode = 1,baseline_scan = "park_ss_ff_0MPa_000315.edf.ge5",
     #     baseline_scan_dark = "dark_before_000320.edf.ge5",
