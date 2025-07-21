@@ -12,12 +12,12 @@ mcp = FastMCP("BYOL_training")
 # Define the path to the main.py script and the Python executable
 SCRIPT_PATH = "/home/beams/AKIRSCH/rareevent/RareEventDetectionHEDM/code/BraggEmb_code/main.py"
 PYTHON_EXEC = "/home/beams/AKIRSCH/miniconda3/envs/event_detection/bin/python"
-workspace_dir = os.environ.get("CLINE_WORKSPACE", "/home/beams/WZHENG/RareEventDetectionHEDM/example_dataset/raw/")
+default_dir = os.environ.get("CLINE_WORKSPACE", "/home/beams/WZHENG/RareEventDetectionHEDM/example_dataset/raw/")
 
 
 
 @mcp.tool()
-def run_training_script(training_scan_file: str, training_dark_file: str, thold: int) -> dict:
+def run_training_script(training_scan_file: str, training_dark_file: str, thold: int = 100, workspace_dir: str = default_dir) -> dict:
     """
     Runs main.py with user-provided scan file, dark file, and threshold.
     Args:
@@ -43,14 +43,10 @@ def run_training_script(training_scan_file: str, training_dark_file: str, thold:
 
         result = subprocess.run(
             cmd,
-            capture_output=True, # comment out for local testing
-            text=True, # capture stdout and stderr as text
-            cwd=os.path.dirname(SCRIPT_PATH), #Set working directory
-    #         stdout=subprocess.PIPE,
-    #         stderr=subprocess.PIPE,
-    #         check=True
-    #     )
-            timeout=60 * 40  # 30-minute timeout
+            capture_output=True,
+            text=True, 
+            cwd=os.path.dirname(SCRIPT_PATH), 
+            timeout=60 * 30  # 30-minute timeout
         )
 
         stdout = result.stdout.strip() if result.stdout is not None else None
