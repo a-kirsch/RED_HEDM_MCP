@@ -2,9 +2,7 @@ import os
 import re
 from mcp.server.fastmcp import FastMCP
 
-print("Starting data_accessing_server...")
 mcp = FastMCP("data accessing")
-print("MCP server initialized.")
 
 DEFAULT_RAW_DATA_DIR = os.environ.get("CLINE_WORKSPACE", "/home/beams/WZHENG/RareEventDetectionHEDM/example_dataset/raw")
 
