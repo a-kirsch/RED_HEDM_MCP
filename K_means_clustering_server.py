@@ -14,7 +14,7 @@ PYTHON_EXEC = os.environ.get("PYTHON_EXEC", sys.executable)
 workspace_dir = os.environ.get("CLINE_WORKSPACE", "/home/beams/WZHENG/RareEventDetectionHEDM/example_dataset/raw/")
 
 @mcp.tool()
-def run_baseline_clustering(file_mode: int = 1, baseline_scan: str, baseline_scan_dark: str, thold: int = 100, baseline_dir: str = workspace_dir) -> str:
+def run_baseline_clustering(baseline_scan: str, baseline_scan_dark: str, file_mode: int = 1, thold: int = 100, baseline_dir: str = workspace_dir) -> str:
     """
     Run the baseline_pre.py script to perform K means baseline clustering.
     Validates input files before execution.

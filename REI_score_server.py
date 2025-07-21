@@ -5,22 +5,21 @@ import sys
 from mcp.server.fastmcp import FastMCP
 
 #initialize the MCP server
-print("Starting REI_score_server...")
 mcp = FastMCP("REI_score")
-print("MCP server initialized.")
 
 SCRIPT_DIR = "/home/beams/AKIRSCH/rareevent/RareEventDetectionHEDM/code/EventDetection_code"
 SCRIPT_PATH = "/home/beams/AKIRSCH/rareevent/RareEventDetectionHEDM/code/EventDetection_code/testing_scan.py"
-PYTHON_EXEC = "/home/beams/AKIRSCH/miniconda3/envs/event_detection/bin/python"
-workspace_dir = os.environ.get("CLINE_WORKSPACE", "/home/beams/WZHENG/RareEventDetectionHEDM/example_dataset/raw/")
+# PYTHON_EXEC = "/home/beams/AKIRSCH/miniconda3/envs/event_detection/bin/python"
+PYTHON_EXEC = os.environ.get("PYTHON_EXEC", sys.executable)
+workspace_dir = os.environ.get("CLINE_WORKSPACE", "/home/beams/WZHENG/RareEventDetectionHEDM/example_dataset/raw")
 
 @mcp.tool()
 def run_testing_scan(
-    file_mode: int,
     testing_scan: str,
     testing_scan_dark: str,
-    thold: int,
-    output_csv: str,
+    thold: int = 100,
+    file_mode: int = 1,
+    output_csv: str = "rei_score_260MPa.csv",
     trained_encoder: str = "../BraggEmb_code/model_save-itrOut/script-ep00100.pth",
     trained_centers: str = "kmeans_model.pkl",
     ncluster: int = 40,
@@ -28,7 +27,8 @@ def run_testing_scan(
     cluster: str = "Kmeans",
     degs: int = 360,
     seed: int = 0,
-    degs_mode: int = 1
+    degs_mode: int = 1,
+    workspace_dir: str = workspace_dir
 ) -> str:
     """
     Run the testing scan step of the Rare Event Detection HEDM workflow.
@@ -50,9 +50,6 @@ def run_testing_scan(
         seed (int): Random seed for reproducibility.
         degs_mode (int): Degree mode (0 for 180, 1 for 360).
     """
-    print("Running REI testing scan with parameters:")
-    print(f"File mode: {file_mode}, Scan: {testing_scan}, Dark: {testing_scan_dark}, Threshold: {thold}, Output: {output_csv}")
-
 
     try:
         cmd = [
