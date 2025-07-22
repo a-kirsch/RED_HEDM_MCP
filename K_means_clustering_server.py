@@ -53,7 +53,7 @@ def run_baseline_clustering(baseline_scan: str, baseline_scan_dark: str, file_mo
 
 if __name__ == "__main__":
     mcp.run()        
-    # print("Starting K_means clustering server...")
+    # local version for testing
     # print(run_baseline_clustering(
     #     file_mode = 1,baseline_scan = "park_ss_ff_0MPa_000315.edf.ge5",
     #     baseline_scan_dark = "dark_before_000320.edf.ge5",

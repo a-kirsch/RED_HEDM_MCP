@@ -6,10 +6,12 @@ mcp = FastMCP("data accessing")
 
 DEFAULT_RAW_DATA_DIR = os.environ.get("CLINE_WORKSPACE", "/home/beams/WZHENG/RareEventDetectionHEDM/example_dataset/raw")
 
+# Function to extract the ID from a filename
 def extract_id(filename: str) -> int | None:
     match = re.search(r'(\d{6})', filename)
     return int(match.group(1)) if match else None
 
+# Function to categorize files into dark and park files
 def categorize_files(files: list[str]) -> tuple[list[str], list[str]]:
     dark_files = [f for f in files if f.startswith("dark")]
     park_files = [f for f in files if f.startswith("park_ss_ff")]
@@ -42,4 +44,5 @@ def list_files(base_dir: str = DEFAULT_RAW_DATA_DIR) -> list[str]:
 
 if __name__ == "__main__":
     mcp.run()
+    # local version for testing
     # print(list_files())

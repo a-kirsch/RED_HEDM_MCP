@@ -7,11 +7,11 @@ from mcp.server.fastmcp import FastMCP
 #initialize the MCP server
 mcp = FastMCP("REI_score")
 
+# Define the directory and script for testing scan
 SCRIPT_DIR = "/home/beams/AKIRSCH/rareevent/RareEventDetectionHEDM/code/EventDetection_code"
 SCRIPT_PATH = "/home/beams/AKIRSCH/rareevent/RareEventDetectionHEDM/code/EventDetection_code/testing_scan.py"
-# PYTHON_EXEC = "/home/beams/AKIRSCH/miniconda3/envs/event_detection/bin/python"
 PYTHON_EXEC = os.environ.get("PYTHON_EXEC", sys.executable)
-workspace_dir = os.environ.get("CLINE_WORKSPACE", "/home/beams/WZHENG/RareEventDetectionHEDM/example_dataset/raw")
+workspace_dir = os.environ.get("CLINE_WORKSPACE", "/home/beams/WZHENG/RareEventDetectionHEDM/example_dataset/raw/")
 
 @mcp.tool()
 def run_testing_scan(
@@ -86,7 +86,7 @@ def run_testing_scan(
 
 if __name__ == "__main__":
     mcp.run()
-    # print("main")
+    # local version for testing
     # print(run_testing_scan(
     #     file_mode=1,
     #     testing_scan = "park_ss_ff_260MPa_000497.edf.ge5",

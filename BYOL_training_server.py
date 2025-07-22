@@ -11,7 +11,6 @@ mcp = FastMCP("BYOL_training")
 
 # Define the path to the main.py script and the Python executable
 SCRIPT_PATH = "/home/beams/AKIRSCH/rareevent/RareEventDetectionHEDM/code/BraggEmb_code/main.py"
-# PYTHON_EXEC = "/home/beams/AKIRSCH/miniconda3/envs/event_detection/bin/python"
 PYTHON_EXEC = os.environ.get("PYTHON_EXEC", sys.executable)
 default_dir = os.environ.get("CLINE_WORKSPACE", "/home/beams/WZHENG/RareEventDetectionHEDM/example_dataset/raw/")
 
@@ -65,6 +64,7 @@ def run_training_script(training_scan_file: str, training_dark_file: str, thold:
 
 if __name__ == "__main__":
     mcp.run()
+    # local version for testing
     # print(run_training_script(
     #     training_scan_file = "park_ss_ff_0MPa_000315.edf.ge5",
     #     training_dark_file = "dark_before_000320.edf.ge5",
