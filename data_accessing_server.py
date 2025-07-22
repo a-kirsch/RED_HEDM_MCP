@@ -17,6 +17,12 @@ def categorize_files(files: list[str]) -> tuple[list[str], list[str]]:
     park_files = [f for f in files if f.startswith("park_ss_ff")]
     return dark_files, park_files
 
+#Extract the load, i.e. number immediately preceding 'MPa' in a filename.
+def extract_mpa(filename: str) -> int | None:
+    match = re.search(r'(\d+)MPa', filename)
+    return int(match.group(1)) if match else None
+
+
 @mcp.tool()
 def list_files(base_dir: str = DEFAULT_RAW_DATA_DIR) -> list[str]:
     """
@@ -35,7 +41,7 @@ def list_files(base_dir: str = DEFAULT_RAW_DATA_DIR) -> list[str]:
 
     for root, _, files in os.walk(base_dir):
         for f in files:
-            if f.endswith(".ge5"):
+            if f.endswith((".ge1", ".ge2", ".ge3", ".ge4", ".ge5", ".h5", ".hd5")):
                 rel_path = os.path.relpath(os.path.join(root, f), base_dir)
                 ge5_files.append(rel_path)
 
