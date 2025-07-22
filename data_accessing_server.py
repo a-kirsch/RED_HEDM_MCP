@@ -42,6 +42,36 @@ def list_files(base_dir: str = DEFAULT_RAW_DATA_DIR) -> list[str]:
     return sorted(ge5_files)
 
 
+@mcp.tool()
+def match_dark_and_park_files(base_dir: str = DEFAULT_RAW_DATA_DIR) -> dict[str, str] | str:
+    """
+    Match park and dark .ge5 files by sorted ID.
+    Returns a dictionary mapping each park file to the corresponding dark file.
+    The files are matched by order after sorting by the 6-digit ID in filenames.
+    """
+    all_files = list_files(base_dir)
+    if isinstance(all_files, str) or any(f.startswith("Error:") for f in all_files):
+        return "Error retrieving file list."
+
+    dark_files, park_files = categorize_files(all_files)
+
+    # Extract IDs and filter out files without valid IDs
+    dark_files_with_ids = [(f, extract_id(f)) for f in dark_files if extract_id(f) is not None]
+    park_files_with_ids = [(f, extract_id(f)) for f in park_files if extract_id(f) is not None]
+
+    # Sort by ID
+    dark_files_sorted = sorted(dark_files_with_ids, key=lambda x: x[1])
+    park_files_sorted = sorted(park_files_with_ids, key=lambda x: x[1])
+
+    # Match lowest park to lowest dark by index
+    matched = {
+        park[0]: dark[0]
+        for park, dark in zip(park_files_sorted, dark_files_sorted)
+    }
+
+    return matched
+
+
 if __name__ == "__main__":
     mcp.run()
     # local version for testing
