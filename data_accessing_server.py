@@ -26,7 +26,7 @@ def extract_mpa(filename: str) -> int | None:
 @mcp.tool()
 def list_files(base_dir: str = DEFAULT_RAW_DATA_DIR) -> list[str]:
     """
-    List all .ge5 files in base_dir and its subdirectories.
+    List all .ge#, .h5, and .hd5 files in base_dir and its subdirectories.
     
     Args:
         base_dir (str): Directory to search (optional — defaults to DEFAULT_RAW_DATA_DIR)
@@ -37,15 +37,15 @@ def list_files(base_dir: str = DEFAULT_RAW_DATA_DIR) -> list[str]:
     if not os.path.exists(base_dir):
         return [f"Error: Directory '{base_dir}' does not exist."]
     
-    ge5_files = []
+    relevant_files = []
 
     for root, _, files in os.walk(base_dir):
         for f in files:
             if f.endswith((".ge1", ".ge2", ".ge3", ".ge4", ".ge5", ".h5", ".hd5")):
                 rel_path = os.path.relpath(os.path.join(root, f), base_dir)
-                ge5_files.append(rel_path)
+                relevant_files.append(rel_path)
 
-    return sorted(ge5_files)
+    return sorted(relevant_files)
 
 
 @mcp.tool()
