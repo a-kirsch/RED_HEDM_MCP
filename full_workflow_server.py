@@ -13,13 +13,30 @@ default_dir = os.environ.get("CLINE_WORKSPACE", "/home/beams/WZHENG/RareEventDet
 
 
 @mcp.tool()
-def full_workflow(training_scan_file: str, training_dark_file: str, thold: int = 100, file_mode: int = 1, workspace_dir: str = default_dir, output_csv: str = "rei_score_260MPa.csv") -> str:
+def full_workflow(training_scan_file: str, training_dark_file: str, testing_scan_file: str, testing_dark_file: str, thold: int = 100, file_mode: int = 1, workspace_dir: str = default_dir, output_csv: str = "rei_score_260MPa.csv") -> str:
     """From scans to REI scores, without intermediate steps."""
     results = []
-    results.append(run_training_script(training_scan_file, training_dark_file, thold, workspace_dir))
-    results.append(run_baseline_clustering(training_scan_file, training_dark_file, file_mode, thold, workspace_dir))
-    results.append(run_testing_scan(training_scan_file, training_dark_file, file_mode, thold, output_csv, workspace_dir))
-    return "\n".join(results)
+    
+    # Run BYOL training
+    training_result = run_training_script(training_scan_file, training_dark_file, thold, workspace_dir)
+    results.append(f"BYOL Training: {training_result}")
+    
+    # Run K-means clustering
+    clustering_result = run_baseline_clustering(training_scan_file, training_dark_file, file_mode, thold, workspace_dir)
+    results.append(f"K-means Clustering: {clustering_result}")
+    
+    # Run REI scoring
+    rei_result = run_testing_scan(
+        testing_scan=testing_scan_file, 
+        testing_scan_dark=testing_dark_file, 
+        thold=thold,
+        file_mode=file_mode,
+        output_csv=output_csv,
+        workspace_dir=workspace_dir
+    )
+    results.append(f"REI Scoring: {rei_result}")
+    
+    return "\n\n".join(str(r) for r in results)
 
 if __name__ == "__main__":
     mcp.run()

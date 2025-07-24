@@ -12,9 +12,10 @@ BASELINE_SCRIPT_DIR = "/home/beams/AKIRSCH/rareevent/RareEventDetectionHEDM/code
 BASELINE_SCRIPT = os.path.join(BASELINE_SCRIPT_DIR, "baseline_pre.py")
 PYTHON_EXEC = os.environ.get("PYTHON_EXEC", sys.executable)
 workspace_dir = os.environ.get("CLINE_WORKSPACE", "/home/beams/WZHENG/RareEventDetectionHEDM/example_dataset/raw/")
+default_encoder_path = "/home/beams/AKIRSCH/rareevent/RareEventDetectionHEDM/code/BraggEmb_code/mcp_run-itrOut/script-ep00100.pth"
 
 @mcp.tool()
-def run_baseline_clustering(baseline_scan: str, baseline_scan_dark: str, file_mode: int = 1, thold: int = 100, baseline_dir: str = workspace_dir) -> str:
+def run_baseline_clustering(baseline_scan: str, baseline_scan_dark: str, file_mode: int = 1, thold: int = 100, baseline_dir: str = workspace_dir, trained_encoder: str = default_encoder_path) -> str:
     """
     Run the baseline_pre.py script to perform K means baseline clustering.
     Validates input files before execution.
@@ -27,7 +28,8 @@ def run_baseline_clustering(baseline_scan: str, baseline_scan_dark: str, file_mo
             "-file_mode", str(file_mode),
             "-baseline_scan", os.path.join(baseline_dir, baseline_scan),
             "-baseline_scan_dark", os.path.join(baseline_dir, baseline_scan_dark),
-            "-thold", str(thold)
+            "-thold", str(thold),
+            "-trained_encoder", trained_encoder
         ]
 
         result = subprocess.run(
