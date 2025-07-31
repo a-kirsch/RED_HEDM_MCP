@@ -27,7 +27,8 @@ def run_baseline_clustering(baseline_scan: str, baseline_scan_dark: str, file_mo
             "-file_mode", str(file_mode),
             "-baseline_scan", os.path.join(baseline_dir, baseline_scan),
             "-baseline_scan_dark", os.path.join(baseline_dir, baseline_scan_dark),
-            "-thold", str(thold)
+            "-thold", str(thold),
+            # "-trained_encoder", "../BraggEmb_code/mcp_run-itrOut/script-ep00100.pth"
         ]
 
         result = subprocess.run(
